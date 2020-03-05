@@ -1,6 +1,6 @@
 <template>
     <div class="login-container" v-if="!this.$route.query.isReload">
-        <Header :status="headerStatus"></Header>
+        <!--<Header :status="headerStatus"></Header>-->
         <div class="login-section">
             <div class="login-content">
                 <el-form
@@ -13,7 +13,7 @@
                 >
                     <div class="title-container">
                         <h3 class="title">
-                            账号登陆
+                            账号登录
                         </h3>
                     </div>
 
@@ -25,7 +25,7 @@
                                 class="login-input"
                                 ref="username"
                                 v-model="loginForm.username"
-                                placeholder="登陆账户"
+                                placeholder="登录账户"
                                 name="username"
                                 type="text"
                                 autocomplete="on"
@@ -61,7 +61,7 @@
                             type="primary"
                             @click.native.prevent="handleLogin"
                     >
-                        登陆
+                        登录
                     </el-button>
                 </el-form>
             </div>
@@ -76,6 +76,8 @@
     import {Form as ElForm, Input} from 'element-ui'
     import Header from '@/components/Header/index.vue'
     import Footer from '@/components/Footer/index.vue'
+    import {login} from "../api/login";
+    import {UserModule} from "../store/modules/login";
 
     @Component({
         name: 'Login',
@@ -91,7 +93,7 @@
         }
 
         created() {
-            console.log(this.$refs.codeImg)
+            // console.log(this.$refs.codeImg)
         }
 
         validatePassword = (rule: any, value: string, callback: Function) => {
@@ -141,7 +143,23 @@
         }
 
         private handleLogin() {
-
+            (this.$refs.loginForm as ElForm).validate(async(valid: boolean) => {
+                if (valid) {
+                    this.loading = true
+                    console.log(this.loginForm)
+                    try{
+                        await UserModule.Login(this.loginForm)
+                        this.$router.push({
+                            path: '/index',
+                        })
+                        this.loading = false
+                    } catch(err) {
+                        this.loading = false
+                    }
+                } else {
+                    return false
+                }
+            })
         }
     }
 </script>

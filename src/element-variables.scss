@@ -8,7 +8,7 @@ $--color-warning: #F5A623;
 /* icon font path, required */
 $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
-@import "../../node_modules/element-ui/packages/theme-chalk/src/index";
+@import "~element-ui/packages/theme-chalk/src/index";
 
 .el-step__icon{
   display: flex !important;
@@ -82,35 +82,44 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
 
 }
 
-.el-submenu__title{
-  //color: $menuText;
-}
 
+.el-submenu__title{
+  background-color: #2B333E;
+  color: $menuText;
+}
+.el-submenu.is-active .el-submenu__title{
+  background-color: $subMenuHover !important;
+}
 .el-menu{
   background-color: #2B333E;
   .el-menu-item{
     color: #FFFFFF !important;
-
+    .el-submenu.is-active.is-opened{
+      .el-submenu__title{
+        background-color: $subMenuHover !important;
+      }
+    }
   }
   .el-menu-item:hover{
     background-color: #222933;
     color: #FFFFFF;
   }
   .el-menu-item.is-active{
-    //background-color: $subMenuHover !important;
+    background-color: $subMenuHover !important;
     color: #5CA7DB;
     .el-submenu__title{
       color: rgba(255, 255, 255, .67) !important;
-      //background-color: $subMenuHover !important;
+      background-color: $subMenuHover !important;
       span {
         color: rgba(255, 255, 255, .67);
       }
     }
   }
   .el-submenu__title:hover{
-    //background-color: $subMenuHover;
+    background-color: $subMenuHover;
   }
 }
+
 
 
 .el-dialog__header{
@@ -124,3 +133,20 @@ $--font-path: '~element-ui/lib/theme-chalk/fonts';
     color: #FFFFFF;
   }
 }
+
+
+
+
+//.sidebar-container .wh-menu.el-menu .el-menu-item.is-active {
+//  position: relative;
+//  background: #222933 !important;
+//  color: #5CA7DB !important;
+//}
+//.el-menu .el-menu-item.is-active {
+//  background-color: #222933 !important;
+//  color: #5CA7DB;
+//}
+//.full-mode .nest-menu .el-submenu > .el-submenu__title, .full-mode .el-submenu .el-menu-item {
+//  min-width: 220px !important;
+//  background-color: #2B333E !important;
+//}

@@ -7,9 +7,11 @@ import '@/plugins/element.js'
 import '@/icons/components'
 
 import App from './App.vue'
-import router from './router'
+import router from '@/router'
 import store from './store'
+// import common from '@/utils/common'
 import './registerServiceWorker'
+import '@/permission'
 
 Vue.config.productionTip = false
 
