@@ -149,9 +149,7 @@
                     console.log(this.loginForm)
                     try{
                         await UserModule.Login(this.loginForm)
-                        this.$router.push({
-                            path: '/index',
-                        })
+                        this.$router.push({path: '/area'})
                         this.loading = false
                     } catch(err) {
                         this.loading = false

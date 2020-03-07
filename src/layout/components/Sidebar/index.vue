@@ -8,7 +8,7 @@
         <el-scrollbar wrap-class="scrollbar-wrapper">
             <el-menu
                     class="wh-menu"
-                    default-active="2"
+                    :default-active="activeMenu"
                     :collapse="isCollapse"
                     :unique-opened="false"
                     :collapse-transition="false"
@@ -16,14 +16,14 @@
 
                 <sidebar-item-link :to="resolvePath('/area')">
                     <el-menu-item index="1">
-                        <i class="el-icon-location"></i>
+                        <i class="el-icon-office-building"></i>
                         <span slot="title">小区管理</span>
                     </el-menu-item>
                 </sidebar-item-link>
 
                 <sidebar-item-link :to="resolvePath('/house')">
                     <el-menu-item index="2">
-                        <i class="el-icon-menu"></i>
+                        <i class="el-icon-s-home"></i>
                         <span slot="title">住户管理</span>
                     </el-menu-item>
                 </sidebar-item-link>
@@ -37,7 +37,7 @@
 
                 <sidebar-item-link :to="resolvePath('/service')">
                 <el-menu-item index="4">
-                    <i class="el-icon-setting"></i>
+                    <i class="el-icon-s-cooperation"></i>
                     <span slot="title">服务记录</span>
                 </el-menu-item>
                 </sidebar-item-link>
@@ -57,6 +57,7 @@
     import Layout from '@/layout/index.vue'
     import SidebarItemLink from './SidebarItemLink.vue'
     import {isExternal} from '@/utils/validate'
+    // import * as path from "path";
     import path from 'path'
 
     @Component({
@@ -80,12 +81,12 @@
             return AppModule.sidebar
         }
 
-        get routes() {
-            // return this.$router.options.routes
-            // return PermissionModule.routes
-            let menus: any = this.$router.options.routes
-            return menus
-        }
+        // get routes() {
+        //     // return this.$router.options.routes
+        //     // return PermissionModule.routes
+        //     let menus: any = this.$router.options.routes
+        //     return menus
+        // }
 
         private formatRouterPath(path: string) {
             if (path) return path
@@ -97,13 +98,20 @@
         // }
 
         get activeMenu() {
+           let childrenRoutes = this.$router['options'].routes[3].children
             const route: any = this.$route
             const {meta, path} = route
             // if set path, the sidebar will highlight the path you set
-            if (meta.activeMenu) {
-                return meta.activeMenu
-            }
-            return path
+            // if (meta.activeMenu) {
+            //     return meta.activeMenu
+            // }
+            // return path
+           for (let i in childrenRoutes) {
+               if (childrenRoutes[i].path == path) {
+                   return Number(i)+1 + ''
+               }
+           }
+            return 1
         }
 
         // get menuActiveTextColor() {

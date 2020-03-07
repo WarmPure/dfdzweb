@@ -58,7 +58,7 @@ class Login extends VuexModule implements IUserState {
     public async Logout() {
         let token = getToken()
         this.LogOut()
-        await logout(token)
+        // await logout(token)
     }
 
     @Action
@@ -72,17 +72,16 @@ class Login extends VuexModule implements IUserState {
 
     @Action
     public async LogOut() {
-        if (this.token === '') {
-            throw Error('LogOut: token is undefined!')
-        }
-        // await logout()
+        // if (this.token === '') {
+        //     throw Error('LogOut: token is undefined!')
+        // }
         removeToken()
         resetRouter()
         removeUserInfo()
 
         this.SET_TOKEN('')
 
-        location.reload()
+        location.reload();
     }
 }
 

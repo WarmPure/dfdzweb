@@ -1,6 +1,6 @@
 <template>
     <div class="app-wrapper">
-        <div>home</div>
+        <div>东方大众物业有限公司欢迎您</div>
         <!--<el-breadcrumb separator-class="el-icon-arrow-right">-->
             <!--<el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>-->
             <!--<el-breadcrumb-item>活动管理</el-breadcrumb-item>-->

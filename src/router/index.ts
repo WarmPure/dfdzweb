@@ -7,7 +7,7 @@ Vue.use(VueRouter)
 export const constantRoutes: RouteConfig[] = [
     {
         path: '/',
-        redirect: '/area'
+        redirect: '/login'
     },
     {
         path: '/login',
@@ -29,7 +29,7 @@ export const constantRoutes: RouteConfig[] = [
         children: [
             {
                 path: '/area',
-                name: 'Area',
+                name: 'area',
                 component: () => import('@/views/Area/Index.vue'),
                 meta: {
                     title: '小区管理',
@@ -38,7 +38,7 @@ export const constantRoutes: RouteConfig[] = [
             },
             {
                 path: '/house',
-                name: 'House',
+                name: 'house',
                 component: () => import('@/views/House/Index.vue'),
                 meta: {
                     title: '住户管理',
@@ -47,7 +47,7 @@ export const constantRoutes: RouteConfig[] = [
             },
             {
                 path: '/account',
-                name: 'Account',
+                name: 'account',
                 component: () => import('@/views/Account/Index.vue'),
                 meta: {
                     title: '账单管理',
@@ -56,7 +56,7 @@ export const constantRoutes: RouteConfig[] = [
             },
             {
                 path: '/service',
-                name: 'Service',
+                name: 'service',
                 component: () => import('@/views/Service/Index.vue'),
                 meta: {
                     title: '服务记录',

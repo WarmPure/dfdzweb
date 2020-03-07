@@ -76,7 +76,7 @@ export default class extends Vue {
   }
 
   private async logout() {
-    // await UserModule.Logout()
+    await UserModule.Logout()
   }
 }
 </script>
