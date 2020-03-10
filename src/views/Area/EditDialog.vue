@@ -2,8 +2,10 @@
     <el-dialog
             :title="title"
             :visible.sync="visible"
-            width="50%">
-        <el-form v-if="visible == true"  ref="saveForm" :model="entity" status-icon :rules="rules" label-width="180px">
+            width="50%"
+            :show-close="false"
+            :before-close="disclaimerDialogSpace">
+        <el-form v-if="visible == true" ref="saveForm" :model="entity" status-icon :rules="rules" label-width="180px">
             <el-form-item label='小区名：' prop="area_name">
                 <el-input v-model.trim="entity.area_name" placeholder="请输入小区名"></el-input>
             </el-form-item>
@@ -15,7 +17,8 @@
             </el-form-item>
             <el-form-item label='楼体类型：' prop="type">
                 <el-select v-model="entity.type">
-                    <el-option v-for="item in accountType" :key="item.value" :label="item.name" :value="item.value" ></el-option>
+                    <el-option v-for="item in accountType" :key="item.value" :label="item.name"
+                               :value="item.value"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item label='占地面积：' prop="footprint">
@@ -44,69 +47,70 @@
 
 <script>
 
-  import { validateMobile } from '@/utils/validate'
+    import {validateMobile} from '@/utils/validate'
 
-  export default {
-    name: "UserEditor",
-    data () {
-      return {
-        visible: false,
-        title: 'editorForm',
-        entity: {
+    export default {
+        name: "UserEditor",
+        data() {
+            return {
+                visible: false,
+                title: 'editorForm',
+                entity: {},
+                isShow: true,
+                mode: null,
+                accountType: [
+                    {value: 1, name: '无电梯'},
+                    {value: 2, name: '有电梯'},
+                    {value: 3, name: '混合'}
+                ],
+                rules: {
+                    area_name: [
+                        {required: true, message: '请输入小区名', trigger: 'blur'}
+                    ],
+                    address: [
+                        {required: true, message: '请输入地址', trigger: 'blur'}
+                    ]
+                },
+            }
         },
-        isShow:true,
-        mode: null,
-        accountType: [
-            {value: 1, name: '核心户'},
-            {value: 2, name: '互联网户'},
-            {value: 3, name: '保证金户'}
-        ],
-        rules: {
-            area_name:[
-            {required: true, message: '请输入小区名', trigger: 'blur'}
-          ],
-            address:[
-            {required: true, message: '请输入地址', trigger: 'blur'}
-          ]
-        },
-      }
-    },
-    props:{
+        props: {},
+        methods: {
+            open(entity) {
+                this.visible = true
+                this.entity = typeof entity === 'string' ? JSON.parse(entity) : entity
+                if (this.entity.id) {
+                    this.mode = 'EDIT'
+                    this.isShow = false
+                    this.title = "修改小区"
+                } else {
+                    this.mode = 'NEW'
+                    this.isShow = true
+                    this.title = "新增小区"
+                }
+            },
+            getMode() {
+                return this.mode
+            },
+            getEntity() {
+                return this.entity
+            },
+            close() {
+                this.visible = false
+            },
+            // dialog 外层空白处点击事件
+            disclaimerDialogSpace(done) {
+            },
 
-    },
-    methods:{
-      open(entity){
-        this.visible = true
-        this.entity = typeof entity === 'string' ? JSON.parse(entity) : entity
-        if(this.entity.id){
-          this.mode = 'EDIT'
-          this.isShow = false
-          this.title = "修改小区"
-        }else{
-          this.mode = 'NEW'
-          this.isShow = true
-          this.title = "新增小区"
+            onOK() {
+                this.$refs.saveForm.validate(valid => {
+                    if (valid) {
+                        this.$emit("onOK", this.entity)
+                    }
+                })
+
+            }
         }
-      },
-      getMode(){
-        return this.mode
-      },
-      getEntity(){
-        return this.entity
-      },
-      close(){
-        this.visible = false
-      },
-      onOK(){
-        this.$refs.saveForm.validate(valid => {
-          if(valid){
-            this.$emit("onOK", this.entity)
-          }
-        })
-
-      }
     }
-  }
 </script>
 
 <style scoped>

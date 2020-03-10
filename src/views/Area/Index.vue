@@ -17,7 +17,7 @@
             <el-table-column
                     prop="address"
                     label="地址"
-                    width="150">
+                    width="200">
             </el-table-column>
             <el-table-column
                     prop="join_time"
@@ -29,34 +29,28 @@
                     label="楼体类型"
                     width="120">
                 <template scope="scoped">
-                    <!--{{scoped.row.accountType == 1 ? '高层' : '无电梯' }}-->
-                    {{getAccountType(scoped.row.accountType)}}
+                    {{getAccountType(scoped.row.type)}}
                 </template>
             </el-table-column>
             <el-table-column
                     prop="footprint"
                     label="占地面积"
-                    width="110">
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="unit_num"
                     label="单元数"
-                    width="110">
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="home_num"
                     label="住户数"
-                    width="110">
-            </el-table-column>
-            <el-table-column
-                    prop="status"
-                    label="状态"
-                    width="100">
+                    width="120">
             </el-table-column>
             <el-table-column
                     prop="comments"
                     label="备注"
-                    width="150">
+                    width="220">
             </el-table-column>
             <el-table-column label="操作">
                 <template scope="scoped">
@@ -119,13 +113,13 @@
             let resultStr: string = ''
             switch (type) {
                 case 1:
-                    resultStr = '核心户'
+                    resultStr = '无电梯'
                     break
                 case 2:
-                    resultStr = '互联网户'
+                    resultStr = '有电梯'
                     break
                 case 3:
-                    resultStr = '保证金户'
+                    resultStr = '混合'
                     break
             }
             return resultStr
@@ -134,12 +128,15 @@
         private async fetch() {
             this.loading = true
             let result = await getAreaList(this.listQuery)
+            // await ProjectsModule.GetProjects(this.listQuery)
+            // this.total = ProjectsModule.projects.count
+            // this.tableList = ProjectsModule.projects.data
             this.loading = false
             if (result.status == 200) {
                 // this.total = AccountModule.accounts.count
                 this.tableList = result.data
             } else {
-                this.$message.error(result.msg)
+                // this.$message.error(result.msg)
             }
         }
 
@@ -153,7 +150,7 @@
                 if (result.status == 200) {
                     console.log('deleteArea success')
                 } else {
-                    this.$message.error(result.msg)
+                    // this.$message.error(result.msg)
                 }
                 this.fetch()
             }).catch(() => {
@@ -165,6 +162,7 @@
             let entity = this.$refs.editor.getEntity()
             let mode = this.$refs.editor.getMode()
             if (mode == 'NEW') {
+                entity.status = 1
                 let result = await addArea(entity)
                 if (result.status == 200) {
                     console.log('addArea success')

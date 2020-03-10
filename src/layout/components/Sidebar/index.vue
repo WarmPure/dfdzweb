@@ -24,7 +24,7 @@
                 <sidebar-item-link :to="resolvePath('/house')">
                     <el-menu-item index="2">
                         <i class="el-icon-s-home"></i>
-                        <span slot="title">住户管理</span>
+                        <span slot="title">房屋管理</span>
                     </el-menu-item>
                 </sidebar-item-link>
 
@@ -38,7 +38,7 @@
                 <sidebar-item-link :to="resolvePath('/service')">
                 <el-menu-item index="4">
                     <i class="el-icon-s-cooperation"></i>
-                    <span slot="title">服务记录</span>
+                    <span slot="title">出工服务记录</span>
                 </el-menu-item>
                 </sidebar-item-link>
             </el-menu>
