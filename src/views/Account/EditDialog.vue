@@ -9,30 +9,20 @@
             <el-form-item label='房屋编号：' prop="house_id">
                 <el-input v-model.trim="entity.house_id" placeholder="请输入房屋编号"></el-input>
             </el-form-item>
-            <el-form-item label='小区：' prop="area_id">
-                <el-select v-model="entity.area_id" placeholder="请选择小区">
-                    <el-option
-                            v-for="item in areaList"
-                            :key="item.id"
-                            :label="item.area_name"
-                            :value="item.id">
-                    </el-option>
-                </el-select>
+            <el-form-item label='缴费时间：' prop="pay_time">
+                <el-date-picker
+                        v-model.trim="entity.pay_time"
+                        type="date"
+                        placeholder="选择日期"
+                        format="yyyy 年 MM 月 dd 日"
+                        value-format="yyyy-MM-dd">
+                </el-date-picker>
             </el-form-item>
-            <el-form-item label='单元：' prop="unit">
-                <el-input v-model.trim="entity.unit" placeholder="请输入单元"></el-input>
+            <el-form-item label='缴费金额：' prop="pay_num">
+                <el-input v-model.trim="entity.pay_num" placeholder="请输入缴费金额"></el-input>
             </el-form-item>
-            <el-form-item label='门牌号：' prop="gate_num">
-                <el-input v-model.trim="entity.gate_num" placeholder="请输入门牌号"></el-input>
-            </el-form-item>
-            <el-form-item label='住宅面积：' prop="footprint">
-                <el-input v-model.trim="entity.footprint" placeholder="请输入住宅面积"></el-input>
-            </el-form-item>
-            <el-form-item label='当前户主：' prop="master">
-                <el-input v-model.trim="entity.master" placeholder="请输入当前户主"></el-input>
-            </el-form-item>
-            <el-form-item label='是否缴纳物业：' prop="isarrear">
-                <el-select v-model="entity.isarrear" placeholder="请选择">
+            <el-form-item label='支付方式：' prop="pay_type">
+                <el-select v-model="entity.pay_type" placeholder="请选择">
                     <el-option
                             v-for="item in isarrearList"
                             :key="item.value"
@@ -41,10 +31,15 @@
                     </el-option>
                 </el-select>
             </el-form-item>
+            <el-form-item label='缴费人：' prop="master">
+                <el-input v-model.trim="entity.master" placeholder="请输入缴费人"></el-input>
+            </el-form-item>
+            <el-form-item label='费用说明：' prop="pay_desc">
+                <el-input v-model.trim="entity.pay_desc" placeholder="请输入费用说明"></el-input>
+            </el-form-item>
             <el-form-item label='备注：' prop="comments">
                 <el-input v-model.trim="entity.comments" placeholder="请输入备注"></el-input>
             </el-form-item>
-
         </el-form>
         <span slot="footer" class="dialog-footer">
         <el-button @click="visible = false">取消</el-button>
@@ -68,27 +63,20 @@
                 isarrearList:[
                     {
                         value: '0',
-                        label: '已缴纳'
+                        label: '现金支付'
                     },
                     {
                         value: '1',
-                        label: '未缴纳'
+                        label: '线上支付'
                     }
                 ],
                 isShow: true,
                 mode: null,
-                accountType: [
-                    {value: 1, name: '核心户'},
-                    {value: 2, name: '互联网户'},
-                    {value: 3, name: '保证金户'}
-                ],
                 rules: {
                     house_id: [
                         {required: true, message: '请输入', trigger: 'blur'}
                     ],
-                    area_id: [
-                        {required: true, message: '请输入', trigger: 'blur'}
-                    ]
+
                 },
             }
         },

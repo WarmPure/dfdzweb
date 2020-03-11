@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
         <div class="search">
-            <el-button type="primary" icon="el-icon-circle-plus" @click="openEditor({})">新增</el-button>
+            <el-button type="primary" icon="el-icon-circle-plus" @click="openEditor({})">新增房屋</el-button>
             <div style="display: inline-flex; float: right; Justify-content:center; align-items:center; margin-bottom: 10px">
                 <div>选择小区</div>
                 <el-select v-model="areaValue" @change="changeArea" clearable style="margin-left: 5px; margin-right: 20px">
@@ -61,11 +61,6 @@
                     {{getAccountType(scoped.row.isarrear)}}
                 </template>
             </el-table-column>
-            <!--<el-table-column-->
-            <!--prop="status"-->
-            <!--label="状态"-->
-            <!--width="100">-->
-            <!--</el-table-column>-->
             <el-table-column
                     prop="comments"
                     label="备注"
@@ -73,11 +68,11 @@
             </el-table-column>
             <el-table-column label="操作">
                 <template scope="scoped">
-                    <el-button type="text"
-                               size="small"
-                               @click="openBill(JSON.stringify(scoped.row))">
-                        物业缴纳单
-                    </el-button>
+<!--                    <el-button type="text"-->
+<!--                               size="small"-->
+<!--                               @click="openBill(JSON.stringify(scoped.row))">-->
+<!--                        物业缴纳单-->
+<!--                    </el-button>-->
                     <el-button type="text"
                                size="small"
                                @click="openEditor(JSON.stringify(scoped.row))">

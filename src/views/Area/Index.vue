@@ -1,7 +1,7 @@
 <template>
     <div class="app-container">
         <div class="search">
-            <el-button type="primary" icon="el-icon-circle-plus" @click="openEditor({})">新增</el-button>
+            <el-button type="primary" icon="el-icon-circle-plus" @click="openEditor({})">新增小区</el-button>
             <!--<el-button type="primary" icon="el-icon-s-finance" style="float: right" @click="openTransfer()">转账</el-button>-->
         </div>
         <el-table

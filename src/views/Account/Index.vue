@@ -1,21 +1,16 @@
 <template>
     <div class="app-container">
         <div class="search">
-            <el-button type="primary" icon="el-icon-circle-plus" @click="openEditor({})">新增</el-button>
+            <el-button type="primary" icon="el-icon-circle-plus" @click="openEditor({})">新增账单</el-button>
             <div style="display: inline-flex; float: right; Justify-content:center; align-items:center; margin-bottom: 10px">
-                <div>选择小区</div>
-                <el-select v-model="areaValue" @change="changeArea" clearable style="margin-left: 5px; margin-right: 20px">
-                    <el-option v-for="item in areaList"
-                               :key="item.id"
-                               :label="item.area_name"
-                               :value="item.id"></el-option>
-                </el-select>
-
-                <div>是否缴纳物业</div>
-                <el-select v-model="payMoney" style="margin-left: 5px" @change="changeIsarrear">
-                    <el-option v-for="item in payTypeList" :key="item.value" :label="item.label"
-                               :value="item.value"></el-option>
-                </el-select>
+                <el-input
+                        style="width: 240px; margin-right: 20px"
+                        placeholder="输入房屋编号"
+                        v-model="listQuery.house_id"
+                        clearable
+                        @clear="fetch()">
+                </el-input>
+                <el-button type="primary" style="margin-left: 10px" @click="fetch()">查询</el-button>
             </div>
         </div>
         <el-table
@@ -24,32 +19,40 @@
                 stripe
                 style="width: 100%">
             <el-table-column
+                    prop="id"
+                    label="账单编号"
+                    width="100">
+            </el-table-column>
+            <el-table-column
                     prop="house_id"
                     label="房屋编号"
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="area.area_name"
-                    label="缴纳时间"
+                    prop="pay_time"
+                    label="缴费时间"
                     width="140">
             </el-table-column>
             <el-table-column
-                    prop="unit"
-                    label="缴纳金额"
+                    prop="pay_num"
+                    label="缴费金额"
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="master"
+                    prop="pay_type"
                     label="支付方式"
                     width="120">
+                <template scope="scoped">
+                    {{getPayType(scoped.row.pay_type)}}
+                </template>
             </el-table-column>
             <el-table-column
                     prop="master"
-                    label="缴纳人"
+                    label="缴费人"
                     width="120">
             </el-table-column>
             <el-table-column
-                    prop="gate_num"
+                    prop="pay_desc"
                     label="费用说明"
                     width="120">
             </el-table-column>
@@ -93,6 +96,7 @@
     import Editor from './EditDialog.vue'
     import {addArea, deleteArea, getAreaList, updateArea} from "../../api/area/area";
     import {addHouse, deleteHouse, getHouseList, updateHouse} from "../../api/house/house";
+    import {addPayBill, deletePayBill, getPayBillList, updatePayBill} from "@/api/paybill/paybill";
 
     @Component({
         name: 'IndexVue',
@@ -108,24 +112,7 @@
             editor: HTMLFormElement
         }
 
-        private areaValue: string = ''
         private areaList: any = []
-
-        private payMoney: string = ''
-        private payTypeList: any = [
-            {
-                value: '',
-                label: '全部'
-            },
-            {
-                value: '0',
-                label: '已缴纳'
-            },
-            {
-                value: '1',
-                label: '未缴纳'
-            }
-        ]
 
         private total: number = 0
         private tableList: any = []
@@ -133,26 +120,12 @@
         private listQuery: any = {
             page: 1,
             limit: 20,
-            areaId: '',
-            isarrear: ''
-        }
-
-        private getAccountType(type): string {
-            let resultStr: string = ''
-            switch (type) {
-                case 0:
-                    resultStr = '已缴纳'
-                    break
-                case 1:
-                    resultStr = '未缴纳'
-                    break
-            }
-            return resultStr
+            house_id: ''
         }
 
         private async fetch() {
             this.loading = true
-            let result = await getHouseList(this.listQuery)
+            let result = await getPayBillList(this.listQuery)
             this.loading = false
             if (result.status == 200) {
                 // this.total = AccountModule.accounts.count
@@ -162,25 +135,15 @@
             }
         }
 
-        private async getAreaList() {
-            let resultAreaList = await getAreaList(this.listQuery)
-            if (resultAreaList.status == 200) {
-                // this.total = AccountModule.accounts.count
-                this.areaList = resultAreaList.data
-            } else {
-                this.$message.error(resultAreaList.msg)
-            }
-        }
-
         private confirmDelete(house: any) {
-            this.$confirm(`删除房屋编号：[${house.house_id}], 是否继续?`, '提示', {
+            this.$confirm(`删除账单编号：[${house.id}], 是否继续?`, '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
                 type: 'warning'
             }).then(async () => {
-                let result = await deleteHouse(house)
+                let result = await deletePayBill(house)
                 if (result.status == 200) {
-                    console.log('deleteArea success')
+                    console.log('delete success')
                 } else {
                     this.$message.error(result.msg)
                 }
@@ -195,7 +158,7 @@
             let mode = this.$refs.editor.getMode()
             if (mode == 'NEW') {
                 entity.status = 1
-                let result = await addHouse(entity)
+                let result = await addPayBill(entity)
                 if (result.status == 200) {
                     console.log('addArea success')
                 } else {
@@ -206,7 +169,7 @@
                 this.fetch()
             } else {
                 console.log(entity);
-                let result = await updateHouse(entity)
+                let result = await updatePayBill(entity)
                 if (result.status == 200) {
                     console.log('updateArea success')
                 } else {
@@ -223,39 +186,21 @@
             this.$refs.editor.open(item, this.areaList)
         }
 
-        private openBill(item: any) {
-
-        }
-
-        private async changeArea(val) {
-            this.listQuery.areaId = val
-            this.loading = true
-            let result = await getHouseList(this.listQuery)
-            this.loading = false
-            if (result.status == 200) {
-                // this.total = AccountModule.accounts.count
-                this.tableList = result.data
-            } else {
-                this.$message.error(result.msg)
+        private getPayType(type): string {
+            let resultStr: string = ''
+            switch (type) {
+                case 0:
+                    resultStr = '现金支付'
+                    break
+                case 1:
+                    resultStr = '线上支付'
+                    break
             }
-        }
-
-        private async changeIsarrear(val) {
-            this.listQuery.isarrear = val
-            this.loading = true
-            let result = await getHouseList(this.listQuery)
-            this.loading = false
-            if (result.status == 200) {
-                // this.total = AccountModule.accounts.count
-                this.tableList = result.data
-            } else {
-                this.$message.error(result.msg)
-            }
+            return resultStr
         }
 
         created() {
             this.fetch()
-            this.getAreaList()
         }
     }
 </script>
