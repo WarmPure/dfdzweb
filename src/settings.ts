@@ -23,7 +23,8 @@ const settings: ISettings = {
   devServerPort: 9527,
   mockServerPort: 9528,
   // VUE_APP_BASE_API: 'http://localhost:8080/'
-    VUE_APP_BASE_API: 'http://192.168.0.103:8080'
+  VUE_APP_BASE_API: 'http://192.168.0.103:8080'
+    // VUE_APP_BASE_API: 'http://47.95.229.186:8080'
   // VUE_APP_BASE_API: 'http://192.168.0.151:9900/'
   // VUE_APP_BASE_API: 'http://58.42.231.231:9900/'
   // VUE_APP_BASE_API: 'http://192.168.0.10:9900/'

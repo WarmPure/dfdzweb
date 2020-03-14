@@ -7,7 +7,7 @@
             :before-close="disclaimerDialogSpace">
         <el-form v-if="visible == true" ref="saveForm" :model="entity" status-icon :rules="rules" label-width="180px">
             <el-form-item label='房屋编号：' prop="house_id">
-                <el-input v-model.trim="entity.house_id" placeholder="请输入房屋编号"></el-input>
+                <el-input v-model.trim="entity.house_id" placeholder="请输入房屋编号(唯一)"></el-input>
             </el-form-item>
             <el-form-item label='小区：' prop="area_id">
                 <el-select v-model="entity.area_id" placeholder="请选择小区">
@@ -20,7 +20,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label='单元：' prop="unit">
-                <el-input v-model.trim="entity.unit" placeholder="请输入单元"></el-input>
+                <el-input v-model.trim="entity.unit" placeholder="请输入第几单元"></el-input>
             </el-form-item>
             <el-form-item label='门牌号：' prop="gate_num">
                 <el-input v-model.trim="entity.gate_num" placeholder="请输入门牌号"></el-input>
@@ -29,10 +29,10 @@
                 <el-input v-model.trim="entity.footprint" placeholder="请输入住宅面积"></el-input>
             </el-form-item>
             <el-form-item label='当前户主：' prop="master">
-                <el-input v-model.trim="entity.master" placeholder="请输入当前户主"></el-input>
+                <el-input v-model.trim="entity.master" placeholder="请输入当前户主姓名"></el-input>
             </el-form-item>
             <el-form-item label='是否缴纳物业：' prop="isarrear">
-                <el-select v-model="entity.isarrear" placeholder="请选择">
+                <el-select v-model="entity.isarrear">
                     <el-option
                             v-for="item in isarrearList"
                             :key="item.value"
@@ -66,14 +66,8 @@
                 entity: {},
                 areaList: [],
                 isarrearList:[
-                    {
-                        value: '0',
-                        label: '已缴纳'
-                    },
-                    {
-                        value: '1',
-                        label: '未缴纳'
-                    }
+                    {value: 0, label: '已缴纳'},
+                    {value: 1, label: '未缴纳'}
                 ],
                 isShow: true,
                 mode: null,
@@ -84,10 +78,10 @@
                 ],
                 rules: {
                     house_id: [
-                        {required: true, message: '请输入', trigger: 'blur'}
+                        {required: true, message: '请输入房屋编号(唯一)', trigger: 'blur'}
                     ],
                     area_id: [
-                        {required: true, message: '请输入', trigger: 'blur'}
+                        {required: true, message: '请选择所属小区', trigger: 'blur'}
                     ]
                 },
             }

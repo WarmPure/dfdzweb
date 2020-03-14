@@ -12,8 +12,14 @@
             <el-form-item label='地址：' prop="address">
                 <el-input v-model.trim="entity.address" placeholder="请输入地址"></el-input>
             </el-form-item>
-            <el-form-item label='承接时间：' prop="join_time">
-                <el-input v-model.trim="entity.join_time" placeholder="请输入账户号"></el-input>
+            <el-form-item label='承接日期：' prop="join_time">
+                <el-date-picker
+                        v-model.trim="entity.join_time"
+                        type="date"
+                        placeholder="选择日期"
+                        format="yyyy 年 MM 月 dd 日"
+                        value-format="yyyy-MM-dd">
+                </el-date-picker>
             </el-form-item>
             <el-form-item label='楼体类型：' prop="type">
                 <el-select v-model="entity.type">
@@ -29,9 +35,6 @@
             </el-form-item>
             <el-form-item label='住户数：' prop="home_num">
                 <el-input v-model.trim="entity.home_num" placeholder="请输入住户数"></el-input>
-            </el-form-item>
-            <el-form-item label='状态：' prop="status">
-                <el-input v-model.trim="entity.status" placeholder="请输入状态"></el-input>
             </el-form-item>
             <el-form-item label='备注：' prop="comments">
                 <el-input v-model.trim="entity.comments" placeholder="请输入备注"></el-input>
@@ -104,6 +107,16 @@
             onOK() {
                 this.$refs.saveForm.validate(valid => {
                     if (valid) {
+
+                        if (this.entity.unit_num != undefined && isNaN(this.entity.unit_num)) {
+                            this.$message('单元数只可输入数字')
+                            return
+                        }
+                        if (this.entity.home_num != undefined && isNaN(this.entity.home_num)) {
+                            this.$message('房屋数只可输入数字')
+                            return
+                        }
+
                         this.$emit("onOK", this.entity)
                     }
                 })

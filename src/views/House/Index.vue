@@ -171,7 +171,7 @@
                 // this.total = AccountModule.accounts.count
                 this.tableList = result.data
             } else {
-                this.$message.error(result.msg)
+                this.$message.error(result['msg'])
             }
         }
 
@@ -181,7 +181,7 @@
                 // this.total = AccountModule.accounts.count
                 this.areaList = resultAreaList.data
             } else {
-                this.$message.error(resultAreaList.msg)
+                this.$message.error(resultAreaList['msg'])
             }
         }
 
@@ -195,7 +195,7 @@
                 if (result.status == 200) {
                     console.log('deleteArea success')
                 } else {
-                    this.$message.error(result.msg)
+                    this.$message.error(result['msg'])
                 }
                 this.fetch()
             }).catch(() => {
@@ -249,7 +249,7 @@
                 // this.total = AccountModule.accounts.count
                 this.tableList = result.data
             } else {
-                this.$message.error(result.msg)
+                this.$message.error(result['msg'])
             }
         }
 
@@ -262,7 +262,7 @@
                 // this.total = AccountModule.accounts.count
                 this.tableList = result.data
             } else {
-                this.$message.error(result.msg)
+                this.$message.error(result['msg'])
             }
         }
 

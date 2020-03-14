@@ -127,11 +127,12 @@
             this.loading = true
             let result = await getPayBillList(this.listQuery)
             this.loading = false
+
             if (result.status == 200) {
                 // this.total = AccountModule.accounts.count
                 this.tableList = result.data
             } else {
-                this.$message.error(result.msg)
+                this.$message.error(result['msg'])
             }
         }
 
@@ -145,7 +146,7 @@
                 if (result.status == 200) {
                     console.log('delete success')
                 } else {
-                    this.$message.error(result.msg)
+                    this.$message.error(result['msg'])
                 }
                 this.fetch()
             }).catch(() => {
@@ -162,7 +163,7 @@
                 if (result.status == 200) {
                     console.log('addArea success')
                 } else {
-                    // this.$message.error(result.msg)
+                    this.$message.error(result['msg'])
                 }
                 this.$message.success('新增成功')
                 this.$refs.editor.close()
@@ -173,7 +174,7 @@
                 if (result.status == 200) {
                     console.log('updateArea success')
                 } else {
-                    // this.$message.error(result.msg)
+                    this.$message.error(result['msg'])
                 }
                 this.$message.success('修改成功')
                 this.$refs.editor.close()

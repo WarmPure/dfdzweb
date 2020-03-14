@@ -21,7 +21,7 @@
             </el-table-column>
             <el-table-column
                     prop="join_time"
-                    label="承接时间"
+                    label="承接日期"
                     width="120">
             </el-table-column>
             <el-table-column
@@ -44,7 +44,7 @@
             </el-table-column>
             <el-table-column
                     prop="home_num"
-                    label="住户数"
+                    label="房屋数"
                     width="120">
             </el-table-column>
             <el-table-column
@@ -136,7 +136,7 @@
                 // this.total = AccountModule.accounts.count
                 this.tableList = result.data
             } else {
-                // this.$message.error(result.msg)
+                this.$message.error(result['msg'])
             }
         }
 
@@ -150,7 +150,7 @@
                 if (result.status == 200) {
                     console.log('deleteArea success')
                 } else {
-                    // this.$message.error(result.msg)
+                    this.$message.error(result['msg'])
                 }
                 this.fetch()
             }).catch(() => {
@@ -167,7 +167,7 @@
                 if (result.status == 200) {
                     console.log('addArea success')
                 } else {
-                    this.$message.error(result.msg)
+                    this.$message.error(result['msg'])
                 }
                 this.$message.success('新增成功')
                 this.$refs.editor.close()
@@ -178,7 +178,7 @@
                 if (result.status == 200) {
                     console.log('updateArea success')
                 } else {
-                    this.$message.error(result.msg)
+                    this.$message.error(result['msg'])
                 }
                 this.$message.success('修改成功')
                 this.$refs.editor.close()

@@ -32,7 +32,7 @@
                 </el-select>
             </el-form-item>
             <el-form-item label='缴费人：' prop="master">
-                <el-input v-model.trim="entity.master" placeholder="请输入缴费人"></el-input>
+                <el-input v-model.trim="entity.master" placeholder="请输入缴费人姓名"></el-input>
             </el-form-item>
             <el-form-item label='费用说明：' prop="pay_desc">
                 <el-input v-model.trim="entity.pay_desc" placeholder="请输入费用说明"></el-input>
@@ -74,9 +74,11 @@
                 mode: null,
                 rules: {
                     house_id: [
-                        {required: true, message: '请输入', trigger: 'blur'}
+                        {required: true, message: '请输入房屋编号', trigger: 'blur'}
                     ],
-
+                    pay_num: [
+                        {required: true, message: '请输入缴费金额', trigger: 'blur'}
+                    ],
                 },
             }
         },
@@ -108,6 +110,10 @@
             onOK() {
                 this.$refs.saveForm.validate(valid => {
                     if (valid) {
+                        if (isNaN(this.entity.pay_num)) {
+                            this.$message('缴费金额只可输入数字')
+                            return
+                        }
                         this.$emit("onOK", this.entity)
                     }
                 })
